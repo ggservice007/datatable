@@ -234,6 +234,8 @@ static PKArgs args_nmodal(0, 0, 0, false, false, {}, "nmodal", nullptr);
 static PKArgs args_nunique(0, 0, 0, false, false, {}, "nunique", nullptr);
 static PKArgs args_sd(0, 0, 0, false, false, {}, "sd", nullptr);
 static PKArgs args_sum(0, 0, 0, false, false, {}, "sum", nullptr);
+static PKArgs args_skew(0, 0, 0, false, false, {}, "skew", nullptr);
+static PKArgs args_kurt(0, 0, 0, false, false, {}, "kurt", nullptr);
 
 oobj Frame::stat(const PKArgs& args) {
   Stat stat = stat_from_args[&args];
@@ -251,6 +253,8 @@ static PKArgs args_mode1(0, 0, 0, false, false, {}, "mode1", nullptr);
 static PKArgs args_nmodal1(0, 0, 0, false, false, {}, "nmodal1", nullptr);
 static PKArgs args_nunique1(0, 0, 0, false, false, {}, "nunique1", nullptr);
 static PKArgs args_sum1(0, 0, 0, false, false, {}, "sum1", nullptr);
+static PKArgs args_skew1(0, 0, 0, false, false, {}, "skew1", nullptr);
+static PKArgs args_kurt1(0, 0, 0, false, false, {}, "kurt1", nullptr);
 
 oobj Frame::stat1(const PKArgs& args) {
   if (dt->ncols() != 1) {
@@ -273,6 +277,8 @@ void Frame::_init_stats(XTypeMaker& xt) {
   xt.add(METHOD(&Frame::stat, args_sd));
   xt.add(METHOD(&Frame::stat, args_nunique));
   xt.add(METHOD(&Frame::stat, args_nmodal));
+  xt.add(METHOD(&Frame::stat, args_skew));
+  xt.add(METHOD(&Frame::stat, args_kurt));
 
   xt.add(METHOD(&Frame::stat1, args_countna1));
   xt.add(METHOD(&Frame::stat1, args_sum1));
@@ -283,6 +289,8 @@ void Frame::_init_stats(XTypeMaker& xt) {
   xt.add(METHOD(&Frame::stat1, args_mode1));
   xt.add(METHOD(&Frame::stat1, args_nmodal1));
   xt.add(METHOD(&Frame::stat1, args_nunique1));
+  xt.add(METHOD(&Frame::stat1, args_skew1));
+  xt.add(METHOD(&Frame::stat1, args_kurt1));
 
   //---- Args -> Stat map ------------------------------------------------------
 
@@ -295,6 +303,8 @@ void Frame::_init_stats(XTypeMaker& xt) {
   stat_from_args[&args_mode]    = Stat::Mode;
   stat_from_args[&args_nmodal]  = Stat::NModal;
   stat_from_args[&args_nunique] = Stat::NUnique;
+  stat_from_args[&args_skew]    = Stat::Skew;
+  stat_from_args[&args_kurt]    = Stat::Kurt;
 
   stat_from_args[&args_countna1] = Stat::NaCount;
   stat_from_args[&args_sum1]     = Stat::Sum;
@@ -305,6 +315,8 @@ void Frame::_init_stats(XTypeMaker& xt) {
   stat_from_args[&args_mode1]    = Stat::Mode;
   stat_from_args[&args_nmodal1]  = Stat::NModal;
   stat_from_args[&args_nunique1] = Stat::NUnique;
+  stat_from_args[&args_skew1]    = Stat::Skew;
+  stat_from_args[&args_kurt1]    = Stat::Kurt;
 }
 
 
